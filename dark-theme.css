@@ -1,0 +1,22 @@
+body.dark-mode {
+    --primary-color: #8f88ff;
+    --text-color: #ffffff;
+    --bg-color: #1a1a1a;
+    --card-bg: rgba(30, 30, 30, 0.7);
+}
+
+.dark-mode .glass-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .skill-bar {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .contact-links a {
+    color: var(--primary-color);
+}
+
+.dark-mode .theme-toggle {
+    color: var(--text-color);
+}

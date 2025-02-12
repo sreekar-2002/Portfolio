@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaya Sreekar Reddy - Interactive Resume</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dark-theme.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <nav class="side-nav">
+        <div class="nav-profile">
+            <div class="profile-image">
+                <div class="profile-placeholder">JSR</div>
+            </div>
+            <h3>Jaya Sreekar Reddy</h3>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about"><i class="fas fa-user"></i>About</a></li>
+            <li><a href="#experience"><i class="fas fa-briefcase"></i>Experience</a></li>
+            <li><a href="#skills"><i class="fas fa-code"></i>Skills</a></li>
+            <li><a href="#education"><i class="fas fa-graduation-cap"></i>Education</a></li>
+            <li><a href="#projects"><i class="fas fa-project-diagram"></i>Projects</a></li>
+            <li><a href="#certifications"><i class="fas fa-certificate"></i>Certifications</a></li>
+        </ul>
+        <div class="social-links">
+            <a href="mailto:cjsreddy2002@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+918309093123" title="Phone"><i class="fas fa-phone"></i></a>
+            <a href="https://www.linkedin.com/in/chereddy-jaya-sreekar-reddy-403a6224a/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+        <div class="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="about" class="section-container">
+            <h1 class="section-title">About Me</h1>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead"></p>
+                    <p>I am a self-confident professional with strong problem-solving skills, driven by a desire for professional growth. I strive to leverage my skills and knowledge effectively to achieve both personal and organizational goals.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section-container">
+            <h2 class="section-title">Experience</h2>
+            <div class="timeline">
+                {% for exp in experiences %}
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>{{ exp.title }}</h3>
+                        <h4>{{ exp.company }}</h4>
+                        <div class="timeline-date">
+                            {{ exp.start_date.strftime('%b %Y') }} - 
+                            {% if exp.end_date %}{{ exp.end_date.strftime('%b %Y') }}{% else %}Present{% endif %}
+                        </div>
+                        <p>{{ exp.description }}</p>
+                        <a href="{{'https://sreekar.tiiny.site/'}}" class="view-button">View</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+        <section id="skills" class="section-container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-container">
+                {% for skill in skills %}
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-percentage">{{ skill.proficiency }}%</span>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: {{ skill.proficiency }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="education" class="section-container">
+            <h2 class="section-title">Education</h2>
+            <div class="education-grid">
+                {% for edu in education %}
+                <div class="education-card">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-details">
+                        <h3>{{ edu.degree }}</h3>
+                        <h4>{{ edu.institution }}</h4>
+                        <p class="education-year">{{ edu.graduation_year }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="projects" class="section-container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+                {% for project in projects %}
+                <div class="project-card">
+                    {% if project.image_url %}
+                    <div class="project-image">
+                        <img src="{{ project.image_url }}" alt="{{ project.title }}">
+                    </div>
+                    {% endif %}
+                    <div class="project-content">
+                        <h3>{{ project.title }}</h3>
+                        <p class="project-tech">{{ project.technologies }}</p>
+                        <p class="project-description">{{ project.description }}</p>
+                        {% if project.link %}
+                        <a href="{{ project.link }}" class="project-link" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="certifications" class="section-container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-grid">
+                {% for cert in certifications %}
+                <div class="certification-card">
+                    <div class="cert-icon">
+                        {% if cert.logo_url %}
+                            <img src="{{ cert.logo_url }}" alt="{{ cert.name }} logo" class="cert-logo">
+                        {% else %}
+                            <i class="fas fa-certificate"></i>
+                        {% endif %}
+                    </div>
+                    <div class="cert-details">
+                        <h3>{{ cert.name }}</h3>
+                        <h4>{{ cert.issuer }}</h4>
+                        <p class="cert-year">{{ cert.year }}</p>
+                        {% if cert.view_url %}
+                        <a href="{{ cert.view_url }}" class="view-cert-btn" target="_blank">View Certificate</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+</body>
+</html>
